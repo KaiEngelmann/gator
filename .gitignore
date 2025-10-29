@@ -1,0 +1,56 @@
+# build artifacts
+*.exe
+*.test
+*.out
+bin/
+dist/
+build/
+
+# dependency / module caches
+vendor/
+*.mod
+*.sum
+
+# environment / secrets
+.env
+.env.*
+.gatorconfig.json
+
+# editor / OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+
+# database-related
+*.db
+*.sqlite
+*.sqlc.json
+sqlc_output/
+migrations_temp/
+
+# logs
+*.log
+logs/
+
+# temporary files
+tmp/
+*.tmp
+*.bak
+*.old
+
+# goose binary or migration temp files
+goose
+goose.db
+
+# compiled Go binaries
+gator
+*.exe
+# PostgreSQL / database artifacts
+*.sql           # optional: ignore raw dumps or exports
+*.dump          # pg_dump output files
+*.backup        # backup files
+pgdata/         # if you ever initdb locally
+postgres_data/  # common local data directory
+pg_logs/        # PostgreSQL logs
