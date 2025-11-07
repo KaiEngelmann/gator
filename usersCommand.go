@@ -1,14 +1,12 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"os"
 )
 
 func users(s *AppState, cmd UserCommand) error {
-	ctx := context.Background()
-	users, err := s.db.GetUsers(ctx)
+	users, err := s.db.GetUsers(s.ctx)
 	if err != nil {
 		fmt.Printf("couldn't fetch users")
 		os.Exit(1)

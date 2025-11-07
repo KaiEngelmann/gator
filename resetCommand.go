@@ -1,14 +1,12 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"os"
 )
 
 func reset(s *AppState, cmd UserCommand) error {
-	ctx := context.Background()
-	err := s.db.Reset(ctx)
+	err := s.db.Reset(s.ctx)
 	if err != nil {
 		fmt.Printf("failed to reset\n")
 		os.Exit(1)

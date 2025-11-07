@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"os"
 )
@@ -10,8 +9,7 @@ func handlerLogin(s *AppState, cmd UserCommand) error {
 	if len(cmd.args) == 0 {
 		return fmt.Errorf("please provide username")
 	}
-	cxt := context.Background()
-	_, err := s.db.GetUser(cxt, cmd.args[0])
+	_, err := s.db.GetUser(s.ctx, cmd.args[0])
 	if err != nil {
 		fmt.Println("User doesn't Exist")
 		os.Exit(1)

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"os"
 	"time"
@@ -20,13 +19,12 @@ func handlerRegister(s *AppState, cmd UserCommand) error {
 		UpdatedAt: time.Now(),
 		Name:      cmd.args[0],
 	}
-	cxt := context.Background()
-	_, err := s.db.GetUser(cxt, userId.Name)
+	_, err := s.db.GetUser(s.ctx, userId.Name)
 	if err == nil {
 		fmt.Println("User already exists")
 		os.Exit(1)
 	}
-	newUser, err := s.db.CreateUser(cxt, userId)
+	newUser, err := s.db.CreateUser(s.ctx, userId)
 	if err != nil {
 		return err
 	}

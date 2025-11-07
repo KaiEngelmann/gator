@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 
 	"github.com/kaiengelmann/gator/internal/config"
@@ -15,6 +16,7 @@ type UserCommand struct {
 type AppState struct {
 	db  *database.Queries
 	cfg *config.Config
+	ctx context.Context
 }
 
 type commandHandler struct {

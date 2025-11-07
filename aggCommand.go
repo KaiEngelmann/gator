@@ -1,14 +1,12 @@
 package main
 
 import (
-	"context"
 	"fmt"
 )
 
 func agg(s *AppState, cmd UserCommand) error {
 	url := "https://www.wagslane.dev/index.xml"
-	cxt := context.Background()
-	resp, err := fetchFeed(cxt, url)
+	resp, err := fetchFeed(s.ctx, url)
 	if err != nil {
 		return err
 	}

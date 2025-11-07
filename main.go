@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"os"
@@ -21,19 +22,24 @@ func main() {
 	if err != nil {
 		fmt.Println("error reading config:", err)
 	}
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 	appState := &AppState{
 		db:  dbQueries,
 		cfg: cfg,
+		ctx: ctx,
 	}
-
 	cmds := &commandHandler{handlers: map[string]func(*AppState, UserCommand) error{}}
 	cmds.register("login", handlerLogin)
 	cmds.register("register", handlerRegister)
 	cmds.register("reset", reset)
 	cmds.register("users", users)
 	cmds.register("agg", agg)
-	cmds.register("addfeed", addfeed)
 	cmds.register("feeds", feeds)
+	cmds.register("addfeed", middlewareLoggedIn(addfeed))
+	cmds.register("follow", middlewareLoggedIn(follow))
+	cmds.register("following", middlewareLoggedIn(following))
+	cmds.register("unfollow", middlewareLoggedIn(unfollow))
 
 	commandLine := os.Args
 	if len(commandLine) < 2 {
@@ -46,7 +52,7 @@ func main() {
 		os.Exit(1)
 	}
 	if err := cmds.run(appState, cmd); err != nil {
-		fmt.Println("Error:", err)
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 }

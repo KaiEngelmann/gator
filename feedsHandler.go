@@ -1,14 +1,12 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"os"
 )
 
 func feeds(s *AppState, cmd UserCommand) error {
-	ctx := context.Background()
-	all_feeds, err := s.db.GetFeeds(ctx)
+	all_feeds, err := s.db.GetFeeds(s.ctx)
 	if err != nil {
 		fmt.Printf("%v", err)
 		os.Exit(1)
