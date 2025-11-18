@@ -29,17 +29,19 @@ func main() {
 		cfg: cfg,
 		ctx: ctx,
 	}
+
 	cmds := &commandHandler{handlers: map[string]func(*AppState, UserCommand) error{}}
 	cmds.register("login", handlerLogin)
 	cmds.register("register", handlerRegister)
+	cmds.register("agg", agg)
 	cmds.register("reset", reset)
 	cmds.register("users", users)
-	cmds.register("agg", agg)
 	cmds.register("feeds", feeds)
 	cmds.register("addfeed", middlewareLoggedIn(addfeed))
 	cmds.register("follow", middlewareLoggedIn(follow))
 	cmds.register("following", middlewareLoggedIn(following))
 	cmds.register("unfollow", middlewareLoggedIn(unfollow))
+	cmds.register("browse", middlewareLoggedIn(browse))
 
 	commandLine := os.Args
 	if len(commandLine) < 2 {
